@@ -50,5 +50,5 @@ from Wikimedia Commons (`7-eleven_logo.svg`). Its source is recorded in
 artistic reference and is **not** licensed under MIT or CC BY 4.0. Do not
 reuse the logo or branding in a way that implies official affiliation.
 
-The store layout, street, props and lighting are fictional and are not based
+The store layout, street, props and lighting were created for this project and are not based
 on a survey of any real location.

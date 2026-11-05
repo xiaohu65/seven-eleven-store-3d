@@ -59,9 +59,9 @@ const state = {
   shopOpen: false,
   walking: false,
   insideStop: 'entrance',
+  doorExitPending: false,
 };
 
-const MODE_INDEX = { day: '01', night: '02' };
 const MODE_COPY = {
   day: {
     kicker: 'FIRST LIGHT / STREET AWAKENS',
@@ -333,6 +333,13 @@ orbit.enabled = !state.intro;
 orbit.update();
 
 const doorLeaves = { left: null, right: null, leftX: 0, rightX: 0, open: 0 };
+const doorClickTarget = new THREE.Mesh(
+  new THREE.PlaneGeometry(2.7, 3.0),
+  new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false, colorWrite: false, side: THREE.DoubleSide }),
+);
+doorClickTarget.name = 'DoorClickTarget';
+doorClickTarget.position.set(0.4, 1.65, 4.78);
+scene.add(doorClickTarget);
 const DOOR_POINT = new THREE.Vector3(0.4, 1.6, 4.8);
 const INTERIOR_POS = new THREE.Vector3(0.4, 1.68, 3.32);
 const INTERIOR_TARGET = new THREE.Vector3(0.4, 1.55, -1.3);
@@ -1136,7 +1143,7 @@ function showHintContent(html) {
   hideHintSoon();
 }
 
-const INTERIOR_HINT = '<span class="hint-line"></span><span>拖动环顾</span><i>·</i><span>右下角「店内导览」或货架标签走动</span><i>·</i><span>点门图示离开</span><span class="hint-line"></span>';
+const INTERIOR_HINT = '<span class="hint-line"></span><span>拖动环顾</span><i>·</i><span>左下角「店内导览」或货架标签走动</span><i>·</i><span>点门或门图示离开</span><span class="hint-line"></span>';
 
 function applyInteriorLook() {
   camera.rotation.order = 'YXZ';
@@ -1218,6 +1225,16 @@ function enterStore() {
   }, REDUCED_MOTION ? 0 : 340);
 }
 
+function exitThroughDoor() {
+  if (!state.inside || state.entering || state.exiting || state.walking || state.doorExitPending) return;
+  state.doorExitPending = true;
+  state.doorForceOpen = true;
+  setTimeout(() => {
+    state.doorExitPending = false;
+    if (state.inside) exitStore();
+  }, 260);
+}
+
 function exitStore() {
   if (!state.inside || state.entering || state.exiting || state.walking) return;
   state.exiting = true;
@@ -1239,6 +1256,7 @@ function exitStore() {
     state.entering = false;
     state.walking = false;
     state.insideStop = 'entrance';
+    state.doorExitPending = false;
     document.body.classList.remove('walking');
     state.doorForceOpen = false;
     state.doorCloseAt = performance.now() + 650;
@@ -1589,7 +1607,7 @@ function drawReceipt(order) {
   ctx.font = `400 13px ${mono}`;
   ctx.fillStyle = 'rgba(27,42,35,.6)';
   ctx.fillText('ELECTRONIC RECEIPT / 电子消费明细', 48, 93);
-  ctx.fillText('FICTIONAL STORE · DEMO', 48, 113);
+  ctx.fillText('STORE DEMO', 48, 113);
   ctx.strokeStyle = 'rgba(27,42,35,.26)';
   ctx.setLineDash([3, 5]);
   ctx.beginPath(); ctx.moveTo(48, 140); ctx.lineTo(672, 140); ctx.stroke();
@@ -1665,7 +1683,7 @@ function drawReceipt(order) {
   ctx.fillText('THANK YOU · 谢谢光临', 360, ty + 118);
   ctx.fillStyle = 'rgba(27,42,35,.34)';
   ctx.font = `400 10px ${mono}`;
-  ctx.fillText('7-ELEVEN 中山门店 · FICTIONAL STORE', 360, ty + 146);
+  ctx.fillText('7-ELEVEN 中山门店 · STORE DEMO', 360, ty + 146);
   ctx.textAlign = 'left';
   ctx.fillStyle = '#ef5b2a'; ctx.fillRect(48, 1132, 202, 4);
   ctx.fillStyle = '#14a46d'; ctx.fillRect(250, 1132, 202, 4);
@@ -2171,7 +2189,7 @@ function drawShopReceipt(order) {
   ctx.font = `600 30px ${serif}`; ctx.fillText('7-ELEVEN 中山门店', 48, 65);
   ctx.font = `400 13px ${mono}`; ctx.fillStyle = 'rgba(27,42,35,.6)';
   ctx.fillText('SHOPPING RECEIPT / 电子购物明细', 48, 93);
-  ctx.fillText('FICTIONAL STORE · DEMO', 48, 113);
+  ctx.fillText('STORE DEMO', 48, 113);
   ctx.strokeStyle = 'rgba(27,42,35,.26)'; ctx.setLineDash([3, 5]);
   ctx.beginPath(); ctx.moveTo(48, 140); ctx.lineTo(672, 140); ctx.stroke(); ctx.setLineDash([]);
   ctx.fillStyle = '#26382d'; ctx.font = `400 13px ${mono}`;
@@ -2212,7 +2230,7 @@ function drawShopReceipt(order) {
   for (let i = 0; i < 46; i++) { const w = 2 + Math.floor(rng() * 5); ctx.fillStyle = '#1b2a23'; ctx.fillRect(bx, y, w, 50); bx += w + 3 + Math.floor(rng() * 4); }
   ctx.fillStyle = 'rgba(27,42,35,.52)'; ctx.font = `400 11px ${mono}`; ctx.textAlign = 'center'; ctx.fillText(`*${order.no}*`, 360, y + 76);
   ctx.font = `400 12px ${mono}`; ctx.fillText('THANK YOU · 谢谢光临', 360, y + 116);
-  ctx.font = `400 10px ${mono}`; ctx.fillStyle = 'rgba(27,42,35,.34)'; ctx.fillText('7-ELEVEN 中山门店 · FICTIONAL STORE', 360, y + 144);
+  ctx.font = `400 10px ${mono}`; ctx.fillStyle = 'rgba(27,42,35,.34)'; ctx.fillText('7-ELEVEN 中山门店 · STORE DEMO', 360, y + 144);
   ctx.textAlign = 'left';
   ctx.fillStyle = '#ef5b2a'; ctx.fillRect(48, H - 58, 202, 4);
   ctx.fillStyle = '#14a46d'; ctx.fillRect(250, H - 58, 202, 4);
@@ -2424,6 +2442,40 @@ canvas.addEventListener('pointerup', (e) => {
   }
 });
 
+let insideDoorClick = null;
+canvas.addEventListener('pointerdown', (e) => {
+  if (!state.inside || state.entering || state.exiting || state.photoMode || state.coffeeOpen || state.shopOpen || state.walking) return;
+  if (e.pointerType === 'mouse' && e.button !== 0) return;
+  insideDoorClick = { x: e.clientX, y: e.clientY, id: e.pointerId, moved: false };
+});
+canvas.addEventListener('pointermove', (e) => {
+  if (!insideDoorClick || e.pointerId !== insideDoorClick.id) return;
+  if (Math.hypot(e.clientX - insideDoorClick.x, e.clientY - insideDoorClick.y) > 8) {
+    insideDoorClick.moved = true;
+  }
+});
+canvas.addEventListener('pointerup', (e) => {
+  if (!insideDoorClick || e.pointerId !== insideDoorClick.id) return;
+  const click = insideDoorClick;
+  insideDoorClick = null;
+  if (click.moved || !state.inside || state.entering || state.exiting || state.photoMode ||
+      state.coffeeOpen || state.shopOpen || state.walking || !modelRoot) return;
+  const ndc = new THREE.Vector2(
+    (e.clientX / innerWidth) * 2 - 1,
+    -(e.clientY / innerHeight) * 2 + 1,
+  );
+  const rc = new THREE.Raycaster();
+  rc.setFromCamera(ndc, camera);
+  const hits = rc.intersectObjects([modelRoot, doorClickTarget], true);
+  const first = hits[0];
+  const hitDoor = first && (first.object === doorClickTarget ||
+    (first.point.x > -0.95 && first.point.x < 1.75 &&
+     first.point.y > 0.05 && first.point.y < 3.45 &&
+     first.point.z > 4.25 && first.point.z < 5.15));
+  if (hitDoor) exitThroughDoor();
+});
+canvas.addEventListener('pointercancel', () => { insideDoorClick = null; });
+
 canvas.addEventListener('pointerdown', (e) => {
   if (!state.inside || state.entering || state.exiting || state.coffeeOpen || state.shopOpen || state.walking) return;
   if (e.pointerType === 'mouse' && e.button !== 0) return;
@@ -2593,8 +2645,6 @@ function setHour(hour, options = {}) {
       btn.classList.toggle('is-active', active);
       btn.setAttribute('aria-pressed', active ? 'true' : 'false');
     });
-    const num = document.getElementById('mode-number');
-    if (num) num.textContent = mode === 'day' || mode === 'night' ? MODE_INDEX[mode] : '··';
     updateModeCopy(mode, Boolean(options.instant));
     if (options.toast) showToast(MODE_COPY[mode].toast);
   }
