@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#060b0d">
+  <meta name="description" content="7-ELEVEN 街角便利店 3D 光影片段：可走进店内、沿导轨走动逛货架、把商品放进购物袋，点咖啡，以三种方式模拟支付并下载电子明细，还能拖动 24 小时日光时间轴。默认当前本地时间。">
+  <title>7-ELEVEN · 街角便利店 3D</title>
+  <style>__CSS__</style>
+</head>
+<body data-mode="night">
+  <canvas id="scene" aria-label="7-ELEVEN 便利店的三维街角场景，可拖动旋转"></canvas>
+
+  <div class="atmosphere" aria-hidden="true">
+    <div class="vignette"></div>
+    <div class="shade-top"></div>
+    <div class="shade-bottom"></div>
+    <div class="grain"></div>
+  </div>
+
+  <main class="ui" id="ui">
+    <header class="masthead">
+      <div class="brand-mark" aria-hidden="true">
+        <span class="stripe stripe-o"></span>
+        <span class="stripe stripe-g"></span>
+        <span class="stripe stripe-r"></span>
+      </div>
+      <div class="brand-copy">
+        <div class="eyebrow">
+          <span class="live-dot"></span>
+          <span>TAIPEI · <span id="clock">--:--</span></span>
+        </div>
+        <h1><span class="seven">7</span><span class="hyphen">-</span><span class="eleven">ELEVEN</span></h1>
+      </div>
+    </header>
+
+    <nav class="mode-bar" aria-label="切换光线与时间">
+      <div class="mode-bar-title">LIGHTING</div>
+      <div class="mode-switch" role="group" aria-label="光线模式">
+        <button class="mode-btn" type="button" data-mode="day" aria-pressed="false" title="日间">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+            <circle cx="12" cy="12" r="4.1"/>
+            <path d="M12 2.7v2.2M12 19.1v2.2M2.7 12h2.2M19.1 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4 17 7M7 17l-1.6 1.6" stroke-linecap="round"/>
+          </svg>
+          <span class="mode-copy"><b>日间</b><i>DAY</i></span>
+        </button>
+        <button class="mode-btn is-active" type="button" data-mode="night" aria-pressed="true" title="夜晚">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+            <path d="M20.2 14.6A8.3 8.3 0 0 1 9.4 3.8a8.4 8.4 0 1 0 10.8 10.8Z" stroke-linejoin="round"/>
+            <path d="M17.4 4.1v2M16.4 5.1h2" stroke-linecap="round" opacity=".7"/>
+          </svg>
+          <span class="mode-copy"><b>夜晚</b><i>NIGHT</i></span>
+        </button>
+      </div>
+      <div class="time-row">
+        <span class="time-end">00</span>
+        <input class="time-range" id="time-range" type="range" min="0" max="1440" step="1" value="840"
+               aria-label="调整一天的日光时间，00:00 到 24:00" title="拖动日光时间（00:00–24:00）">
+        <span class="time-end">24</span>
+        <span class="time-now" id="time-now">14:00</span>
+      </div>
+    </nav>
+
+    <section class="caption" aria-live="polite">
+      <div class="caption-rule"><span></span><span></span><span></span></div>
+      <div class="caption-kicker" id="caption-kicker">MIDNIGHT / ALWAYS OPEN</div>
+      <h2 id="caption-title">总有一盏灯亮着</h2>
+      <p id="caption-copy">凌晨的街道安静下来，冰柜的低鸣和店招的暖光，替街角守着最后一格清醒。</p>
+      <div class="caption-meta">
+        <span>台北 · 虚构街角</span>
+        <span class="meta-sep">/</span>
+        <span>13.2 × 9.6 m</span>
+
+      </div>
+    </section>
+
+    <nav class="view-tools" aria-label="视角控制">
+      <button class="tool-btn tool-enter" id="btn-enter" type="button" aria-pressed="false" title="走进店内">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.45" aria-hidden="true">
+          <path d="M5 20V4.6h9.2v15.4M8.2 20V8.4h11v11.6M14.2 12.1h.1" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M17.6 4.4 14.8 7.2M14.8 4.4l2.8 2.8" stroke-linecap="round"/>
+        </svg>
+        <span class="sr-only">走进店内</span>
+      </button>
+      <button class="tool-btn" id="btn-photo" type="button" aria-pressed="false" title="拍照模式">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.45" aria-hidden="true">
+          <path d="M4.3 8.2h3.1l1.4-2h6.4l1.4 2h3.1v11.4H4.3V8.2Z" stroke-linejoin="round"/>
+          <circle cx="12" cy="13.4" r="3.4"/>
+        </svg>
+        <span class="sr-only">拍照模式</span>
+      </button>
+      <button class="tool-btn is-on" id="btn-rotate" type="button" aria-pressed="true" title="自动旋转">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.45" aria-hidden="true">
+          <path d="M19.8 8.2v4.6h-4.6M4.2 15.8v-4.6h4.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M17.8 15.8A7.1 7.1 0 0 1 5.7 14M6.2 8.2A7.1 7.1 0 0 1 18.3 10" stroke-linecap="round"/>
+        </svg>
+        <span class="tool-led" aria-hidden="true"></span>
+        <span class="sr-only">自动旋转</span>
+      </button>
+      <button class="tool-btn" id="btn-reset" type="button" title="重置视角">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.45" aria-hidden="true">
+          <circle cx="12" cy="12" r="6.7" opacity=".38"/>
+          <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/>
+          <path d="M12 2.8v3.1M12 18.1v3.1M2.8 12h3.1M18.1 12h3.1" stroke-linecap="round"/>
+        </svg>
+        <span class="sr-only">重置视角</span>
+      </button>
+      <button class="tool-btn tool-info" id="btn-info" type="button" title="关于这件作品">
+        <span>i</span><span class="sr-only">关于这件作品</span>
+      </button>
+    </nav>
+
+    <div class="walk-layer" id="walk-layer" aria-hidden="true">
+      <button class="walk-marker" type="button" data-stop="entrance"><span class="walk-dot"></span><span class="walk-label">入口</span></button>
+      <button class="walk-marker" type="button" data-stop="drinks"><span class="walk-dot"></span><span class="walk-label">冷藏饮料</span></button>
+      <button class="walk-marker" type="button" data-stop="snacks"><span class="walk-dot"></span><span class="walk-label">零食</span></button>
+      <button class="walk-marker" type="button" data-stop="daily"><span class="walk-dot"></span><span class="walk-label">日用品</span></button>
+    </div>
+
+    <nav class="route-bar" id="route-bar" aria-label="店内导览">
+      <span class="route-title"><b>店内导览</b><i>点击前往</i></span>
+      <button type="button" data-route-stop="entrance">入口</button>
+      <button type="button" data-route-stop="drinks">冷藏饮料</button>
+      <button type="button" data-route-stop="snacks">零食</button>
+      <button type="button" data-route-stop="daily">日用品</button>
+    </nav>
+
+    <div class="store-services" id="store-services" aria-label="店内服务">
+      <button class="service-btn service-coffee" id="btn-coffee" type="button" aria-haspopup="dialog">
+        <span class="service-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35">
+            <path d="M6.4 8.2h11.2v4.6a5.6 5.6 0 0 1-11.2 0V8.2Z" stroke-linejoin="round"/>
+            <path d="M17.6 9.3h1.2a2.3 2.3 0 0 1 0 4.6h-1.2M8.4 4.2V2.6M12 4.2V2.6M15.6 4.2V2.6" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="service-copy"><b>点咖啡</b><i>COFFEE</i></span>
+      </button>
+      <button class="service-btn service-shop" id="btn-shop" type="button" aria-haspopup="dialog">
+        <span class="service-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35">
+            <path d="M4.8 8.5h14.4l-1.1 11.1H5.9L4.8 8.5Z" stroke-linejoin="round"/>
+            <path d="M8.5 8.5V7a3.5 3.5 0 0 1 7 0v1.5" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="service-copy"><b>逛货架</b><i>NIGHT SHOP</i></span>
+      </button>
+      <button class="service-btn service-bag" id="btn-bag" type="button" aria-label="查看购物袋" title="购物袋">
+        <span class="service-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35">
+            <path d="M4.8 8.5h14.4l-1.1 11.1H5.9L4.8 8.5Z" stroke-linejoin="round"/>
+            <path d="M8.5 8.5V7a3.5 3.5 0 0 1 7 0v1.5" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <b class="bag-count" id="bag-count">0</b>
+      </button>
+    </div>
+
+    <div class="hint" id="hint">
+      <span class="hint-line"></span>
+      <span>拖动环绕</span><i>·</i><span>滚轮缩放</span><i>·</i><span>点门图示入店</span>
+      <span class="hint-line"></span>
+    </div>
+
+    <footer class="micro-footer">
+      <span>PROCEDURAL STUDY</span>
+      <span class="footer-sep">/</span>
+      <span>BLENDER + THREE.JS</span>
+      <span class="footer-sep">/</span>
+      <span>2026</span>
+    </footer>
+
+    <div class="mode-toast" id="mode-toast" aria-hidden="true">
+      <span class="toast-dot"></span><span id="toast-text">NIGHT</span>
+    </div>
+  </main>
+
+  <div class="scene-fade" id="scene-fade" aria-hidden="true"></div>
+
+  <div class="photo-bar" id="photo-bar">
+    <div class="photo-title"><span class="photo-dot"></span><span>PHOTO MODE</span></div>
+    <span class="photo-state" id="photo-state">拖动取景</span>
+    <button class="photo-btn photo-save" id="btn-photo-save" type="button">保存 PNG</button>
+    <button class="photo-btn" id="btn-photo-exit" type="button">退出</button>
+  </div>
+  <div class="photo-tip" id="photo-tip">拖动取景 · 滚轮缩放 · 隐藏 UI</div>
+
+  <div class="coffee-modal" id="coffee-modal" aria-hidden="true">
+    <div class="coffee-backdrop" data-coffee-close="1"></div>
+    <section class="coffee-panel" role="dialog" aria-modal="true" aria-labelledby="coffee-title">
+      <div class="coffee-topline"><span>7-ELEVEN / NIGHT COFFEE</span></div>
+      <button class="coffee-close" id="coffee-close" type="button" aria-label="关闭咖啡点单">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke-linecap="round"/></svg>
+      </button>
+      <header class="coffee-header">
+        <div class="coffee-stripes"><i></i><i></i><i></i></div>
+        <p class="coffee-eyebrow">深夜自取 · 自助点单</p>
+        <h2 id="coffee-title">点一杯咖啡</h2>
+        <p class="coffee-sub">选一杯喜欢的咖啡，完成支付后取得电子明细与数字咖啡卡。</p>
+      </header>
+
+      <div class="coffee-stages">
+        <section class="coffee-stage is-active" data-coffee-stage="order">
+          <div class="coffee-order-grid">
+            <div class="coffee-preview">
+              <div class="coffee-cup-scene" id="coffee-cup-scene">
+                <div class="cup-steam" aria-hidden="true"><i></i><i></i><i></i></div>
+                <div class="cup-lid"></div>
+                <div class="cup-body">
+                  <div class="cup-liquid"></div>
+                  <div class="cup-sleeve"><span>7</span><i></i><i></i><i></i></div>
+                  <div class="cup-ice" aria-hidden="true"><i></i><i></i><i></i></div>
+                </div>
+                <div class="cup-shadow"></div>
+              </div>
+              <div class="coffee-preview-name"><b id="coffee-preview-name">热拿铁</b><span>NIGHT COFFEE</span></div>
+            </div>
+            <div class="coffee-controls">
+              <div class="coffee-temp" role="group" aria-label="咖啡温度">
+                <button class="is-active" type="button" data-temp="hot">热</button>
+                <button type="button" data-temp="iced">冰</button>
+              </div>
+              <div class="coffee-menu" id="coffee-menu">
+                <button class="coffee-option" type="button" data-coffee="americano">
+                  <span class="coffee-dot" style="--dot:#3b2418"></span><span class="coffee-option-copy"><b>美式</b><i>Americano</i></span><span class="coffee-price">NT$45</span>
+                </button>
+                <button class="coffee-option is-selected" type="button" data-coffee="latte">
+                  <span class="coffee-dot" style="--dot:#b68a63"></span><span class="coffee-option-copy"><b>拿铁</b><i>Latte</i></span><span class="coffee-price">NT$55</span>
+                </button>
+                <button class="coffee-option" type="button" data-coffee="cappuccino">
+                  <span class="coffee-dot" style="--dot:#c9a27b"></span><span class="coffee-option-copy"><b>卡布奇诺</b><i>Cappuccino</i></span><span class="coffee-price">NT$55</span>
+                </button>
+                <button class="coffee-option" type="button" data-coffee="mocha">
+                  <span class="coffee-dot" style="--dot:#6d4934"></span><span class="coffee-option-copy"><b>摩卡</b><i>Mocha</i></span><span class="coffee-price">NT$65</span>
+                </button>
+              </div>
+              <div class="coffee-total-row"><span>合计 / TOTAL</span><strong id="coffee-total">NT$55</strong></div>
+              <button class="coffee-primary" id="coffee-next" type="button">前往付款</button>
+              <p class="coffee-fineprint">单杯直接结账，不加入购物袋。</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="coffee-stage" data-coffee-stage="pay">
+          <div class="coffee-pay-grid">
+            <div class="coffee-pay-summary">
+              <div class="coffee-summary-top"><span>订单摘要</span><span id="coffee-order-label">SELF-SERVICE</span></div>
+              <div class="coffee-summary-item"><span id="coffee-pay-name">热拿铁</span><b id="coffee-pay-price">NT$55</b></div>
+              <label class="discount-toggle" for="coffee-discount">
+                <input type="checkbox" id="coffee-discount" />
+                <span><b>开亚员工 8.8 折</b><i>KAIYA STAFF · 12% OFF</i></span>
+              </label>
+              <div class="checkout-discount" id="coffee-discount-line" hidden><span>员工折扣</span><b id="coffee-discount-value">-NT$0</b></div>
+              <div class="coffee-summary-total"><span>应付金额</span><strong id="coffee-pay-total">NT$55</strong></div>
+              <p>此页为互动展示。未连接任何真实支付服务，也不会产生真实交易。</p>
+            </div>
+            <div class="coffee-pay-box">
+              <h3>选择支付方式</h3>
+              <div class="coffee-pay-methods" role="group" aria-label="支付方式">
+                <button class="coffee-pay-method" type="button" data-pay="alipay"><span class="pay-mark pay-alipay">支</span><span><b>Alipay</b><i>支付宝</i></span></button>
+                <button class="coffee-pay-method" type="button" data-pay="wechat"><span class="pay-mark pay-wechat">微</span><span><b>WeChat Pay</b><i>微信支付</i></span></button>
+                <button class="coffee-pay-method" type="button" data-pay="unionpay"><span class="pay-mark pay-unionpay">银</span><span><b>UnionPay</b><i>银联</i></span></button>
+              </div>
+              <div class="coffee-qr-wrap" id="coffee-qr-wrap">
+                <img id="coffee-qr" alt="模拟支付二维码" />
+                <span id="coffee-qr-hint">选择支付方式后显示模拟扫码</span>
+              </div>
+              <button class="coffee-primary" id="coffee-pay" type="button" disabled>确认付款</button>
+              <button class="coffee-text" id="coffee-back" type="button">返回品项</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="coffee-stage" data-coffee-stage="success">
+          <div class="coffee-success-head">
+            <span class="coffee-check">✓</span>
+            <div><h3>付款完成 <small>SIMULATED</small></h3><p>已为你产生电子消费明细与深夜咖啡卡，可下载保存。</p></div>
+          </div>
+          <div class="coffee-artifacts">
+            <figure class="coffee-artifact">
+              <div class="artifact-frame receipt-frame"><img id="coffee-receipt-img" alt="电子消费明细" /></div>
+              <figcaption>电子消费明细 · E-RECEIPT</figcaption>
+              <button class="coffee-secondary" id="coffee-download-receipt" type="button">下载收据 PNG</button>
+            </figure>
+            <figure class="coffee-artifact">
+              <div class="artifact-frame card-frame"><img id="coffee-card-img" alt="电子咖啡卡" /></div>
+              <figcaption>深夜咖啡卡 · NIGHT COFFEE CARD</figcaption>
+              <button class="coffee-secondary" id="coffee-download-card" type="button">下载咖啡卡 PNG</button>
+            </figure>
+          </div>
+          <div class="coffee-success-actions">
+            <button class="coffee-text" id="coffee-again" type="button">再点一杯</button>
+            <button class="coffee-primary" id="coffee-done" type="button">完成</button>
+          </div>
+        </section>
+      </div>
+
+      <div class="coffee-footer"><span>7-ELEVEN 中山门店 · 虚构门店</span><span>SIMULATED TRANSACTION</span></div>
+    </section>
+  </div>
+
+  <div class="shop-modal" id="shop-modal" aria-hidden="true">
+    <div class="shop-backdrop" data-shop-close="1"></div>
+    <section class="shop-panel" role="dialog" aria-modal="true" aria-labelledby="shop-title">
+      <div class="shop-topline"><span>7-ELEVEN / NIGHT SHOP</span></div>
+      <button class="shop-close" id="shop-close" type="button" aria-label="关闭购物">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke-linecap="round"/></svg>
+      </button>
+      <header class="shop-header">
+        <div class="shop-stripes"><i></i><i></i><i></i></div>
+        <p class="shop-eyebrow">深夜补给 · SELF CHECKOUT</p>
+        <h2 id="shop-title">逛一下货架</h2>
+        <p class="shop-sub">把想吃的放进购物袋。咖啡仍是独立单杯结账，不会加入购物袋。</p>
+      </header>
+      <div class="shop-stages">
+        <section class="shop-stage is-active" data-shop-stage="browse">
+          <div class="shop-grid">
+            <div class="shop-catalog">
+              <div class="shop-tabs" role="tablist" aria-label="商品分类">
+                <button class="is-active" type="button" data-shop-cat="drinks" role="tab" aria-selected="true">冷藏饮料</button>
+                <button type="button" data-shop-cat="snacks" role="tab" aria-selected="false">零食</button>
+                <button type="button" data-shop-cat="daily" role="tab" aria-selected="false">日用品</button>
+              </div>
+              <div class="shop-products" id="shop-products"></div>
+            </div>
+            <aside class="shop-cart" id="shop-cart">
+              <div class="shop-cart-head"><h3>购物袋</h3><span id="shop-cart-count">0 件</span></div>
+              <div class="shop-cart-lines" id="shop-cart-lines">
+                <p class="shop-cart-empty">购物袋还是空的。<br>挑一件深夜补给吧。</p>
+              </div>
+              <div class="shop-cart-total"><span>合计 / TOTAL</span><strong id="shop-total">NT$0</strong></div>
+              <button class="shop-primary" id="shop-checkout" type="button" disabled>前往结账</button>
+              <p class="shop-note">咖啡独立单杯结账 · 不加入购物袋</p>
+            </aside>
+          </div>
+        </section>
+
+        <section class="shop-stage" data-shop-stage="pay">
+          <div class="shop-pay-grid">
+            <div class="shop-pay-summary">
+              <div class="shop-summary-head"><span>订单摘要</span><span id="shop-order-label">SELF-SERVICE</span></div>
+              <div class="shop-pay-lines" id="shop-pay-lines"></div>
+              <label class="discount-toggle discount-toggle-dark" for="shop-discount">
+                <input type="checkbox" id="shop-discount" />
+                <span><b>开亚员工 8.8 折</b><i>KAIYA STAFF · 12% OFF</i></span>
+              </label>
+              <div class="checkout-discount" id="shop-discount-line" hidden><span>员工折扣</span><b id="shop-discount-value">-NT$0</b></div>
+              <div class="shop-pay-total"><span>应付金额</span><strong id="shop-pay-total">NT$0</strong></div>
+              <p>此页为互动展示。没有连接任何真实支付服务，也不会产生真实交易。</p>
+            </div>
+            <div class="shop-pay-box">
+              <h3>选择支付方式</h3>
+              <div class="shop-pay-methods" role="group" aria-label="购物支付方式">
+                <button class="shop-pay-method" type="button" data-shop-pay="alipay"><span class="pay-mark pay-alipay">支</span><span><b>Alipay</b><i>支付宝</i></span></button>
+                <button class="shop-pay-method" type="button" data-shop-pay="wechat"><span class="pay-mark pay-wechat">微</span><span><b>WeChat Pay</b><i>微信支付</i></span></button>
+                <button class="shop-pay-method" type="button" data-shop-pay="unionpay"><span class="pay-mark pay-unionpay">银</span><span><b>UnionPay</b><i>银联</i></span></button>
+              </div>
+              <div class="shop-qr-wrap" id="shop-qr-wrap">
+                <img id="shop-qr" alt="模拟支付二维码" />
+                <span id="shop-qr-hint">选择支付方式后显示模拟扫码</span>
+              </div>
+              <button class="shop-primary" id="shop-pay" type="button" disabled>确认付款</button>
+              <button class="shop-text" id="shop-back" type="button">返回购物袋</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="shop-stage" data-shop-stage="success">
+          <div class="shop-success-head">
+            <span class="shop-check">✓</span>
+            <div><h3>购物完成 <small>SIMULATED</small></h3><p>电子购物明细已产生，可下载保存。</p></div>
+          </div>
+          <div class="shop-receipt-stage">
+            <div class="shop-receipt-frame"><img id="shop-receipt-img" alt="电子购物消费明细" /></div>
+            <div class="shop-receipt-copy">
+              <p class="shop-eyebrow">E-RECEIPT / 购物明细</p>
+              <h3 id="shop-receipt-title">已将商品打包</h3>
+              <p>明细包含品项、数量、单价、支付方式与订单号。所有数据皆为本地模拟。</p>
+              <button class="shop-secondary" id="shop-download" type="button">下载购物明细 PNG</button>
+              <div class="shop-success-actions">
+                <button class="shop-text" id="shop-again" type="button">继续购物</button>
+                <button class="shop-primary" id="shop-done" type="button">完成</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="shop-footer"><span>7-ELEVEN 中山门店 · 虚构门店</span><span>SIMULATED TRANSACTION</span></div>
+    </section>
+  </div>
+
+  <div class="loading" id="loading" role="status" aria-live="polite">
+    <div class="loader-inner">
+      <div class="loader-brand">
+        <span class="loader-seven">7</span><span class="loader-hyphen">-</span><span class="loader-eleven">ELEVEN</span>
+      </div>
+      <div class="loader-sub">街角便利店 · 3D</div>
+      <div class="loader-stripes"><i></i><i></i><i></i></div>
+      <div class="loader-bar"><span id="load-bar"></span></div>
+      <div class="loader-row">
+        <span id="load-status">正在点亮店招</span>
+        <span id="load-pct">00</span>
+      </div>
+    </div>
+    <div class="loader-corner">TAIPEI / 25.05°N 121.52°E</div>
+  </div>
+
+  <div class="modal" id="info-modal" aria-hidden="true">
+    <div class="modal-backdrop" data-close="1"></div>
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="info-title">
+      <button class="modal-close" id="info-close" type="button" aria-label="关闭">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+          <path d="m6 6 12 12M18 6 6 18" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <div class="modal-topline"><span>ABOUT THE STUDY</span></div>
+      <h2 id="info-title">不是一家真的店，<br>但今晚它亮着。</h2>
+      <p class="modal-lead">一间不存在于地图上的 7-ELEVEN 街角店，以程序化方式在 Blender 中搭建，再搬进浏览器，让日光与深夜各自改变它的表情。</p>
+      <div class="modal-stats">
+        <div><b>71,194</b><span>三角面 · Triangles</span></div>
+        <div><b>628</b><span>网格 · Mesh objects</span></div>
+        <div><b>38</b><span>贴图 · Textures</span></div>
+        <div><b>2</b><span>光线模式 · Modes</span></div>
+      </div>
+      <div class="modal-cols">
+        <div>
+          <h3>场景</h3>
+          <p>店面、玻璃门、冷饮柜、分组陈列商品、收银台、咖啡调味台、思乐冰机、ATM、杂志架、购物袋、备货梯与出口指示由 13.2 × 9.6 米的街角建筑展开；可走进店内，通过拖动环顾货架与柜台。左侧门框有 Alipay、WeChat Pay、银联的垂直支付牌；店外包含骑楼、冰柜、A 字牌、机车、单车与停放牌、长椅、报纸箱、消防栓、导盲砖、路树、路灯与架空线。</p>
+        </div>
+        <div>
+          <h3>光线</h3>
+          <p>日间使用偏暖的清晨日照；拖动时间轴可连续过渡到黄昏与夜晚，店招、路灯与室内灯会一起醒来。默认载入当前本地时间。</p>
+        </div>
+      </div>
+      <div class="modal-tech">
+        <span>BLENDER 5.2.3</span><i></i><span>THREE.JS r180</span><i></i><span>GLTF 2.0</span><i></i><span>WEBGL 2</span>
+      </div>
+      <div class="modal-note">
+        <p>操作：拖动环绕 · 滚轮／双指缩放 · 双击复位 · 点玻璃门或右下角（手机右上角）门图示、按 <b>E</b> 走进店内，店内拖动环顾 · 点右下角「店内导览」或货架标签走动 · 按 <b>S</b> 或点「逛货架」购物，<b>B</b> 打开购物袋 · 按 <b>C</b> 点一杯深夜咖啡 · 0–24 时日光时间轴默认当前时间，可拖动 · <b>P</b> 进入拍照模式并可保存 PNG · 数字键 1 / 2 切换日／夜 · R 重置视角 · I 打开本说明 · 空格键暂停旋转 · ESC 关闭面板、离开店内或关闭窗口。</p>
+        <p>咖啡：美式 / 拿铁 / 卡布奇诺 / 摩卡，可选热或冰；Alipay、WeChat Pay、银联为模拟支付。完成后可下载电子消费明细与深夜咖啡卡，不加入购物袋，也不产生真实交易。</p>
+        <p>购物：走到冷藏饮料、零食或日用品货架，把商品加入购物袋、调整数量，再以三种方式模拟结账并下载购物明细。日用品区提供安全套、湿纸巾与打火机。两笔订单结账时都可勾选「开亚员工 8.8 折」。咖啡与购物是两笔独立订单。</p>
+        <p class="legal">独立创作之建筑光影研究，非 7-Eleven, Inc. 官方作品或实际店铺。7-ELEVEN 名称、标志与相关商标属于其权利人；场景设计为虚构。</p>
+      </div>
+      <div class="modal-sign">PROCEDURAL CORNER STORE · TAIPEI · 2026</div>
+    </div>
+  </div>
+
+  <div class="fallback" id="fallback" hidden>
+    <div>
+      <h2>需要启用 WebGL 2</h2>
+      <p>请使用最新版 Chrome、Safari 或 Edge 开启这个 3D 场景。</p>
+    </div>
+  </div>
+
+  <script>__JS__</script>
+</body>
+</html>

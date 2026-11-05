@@ -1,0 +1,7 @@
+node_modules/
+viewer/dist/
+build/*
+!build/seven_eleven_store_asset.blend
+.DS_Store
+*.blend1
+__pycache__/

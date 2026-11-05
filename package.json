@@ -1,0 +1,19 @@
+{
+  "name": "seven-eleven-store-3d",
+  "version": "1.0.0",
+  "description": "Procedural 3D convenience store with rail-guided shopping, coffee, simulated payment and a 24-hour daylight timeline — Blender + Three.js",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:viewer": "python3 scripts/build_viewer.py",
+    "build": "python3 scripts/build_viewer.py"
+  },
+  "dependencies": {
+    "esbuild": "^0.25.10",
+    "puppeteer-core": "^24.15.0",
+    "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "gltf-validator": "^2.0.0-dev.3.10"
+  }
+}
