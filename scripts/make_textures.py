@@ -150,11 +150,11 @@ def make_fascia():
     d = ImageDraw.Draw(img)
     d.line([(2204, 62), (2204, 197)], fill=(219, 220, 213), width=2)
     text(d, (2258, 80), "24", font(F_DIN, 116), ORANGE, anchor="lt")
-    text(d, (2492, 92), "HOURS", font(F_DIN_ALT, 57), GREEN, spacing=4)
-    text(d, (2494, 154), "全年无休 · 天天为你", f_hei(31), (80, 87, 81))
-    # Right-hand support copy.
-    text(d, (3716, 102), "OPEN  ALWAYS", font(F_DIN_ALT, 31), GREEN, anchor="ra", spacing=4)
-    text(d, (3716, 151), "24 / 7", font(F_DIN, 42), (79, 86, 80), anchor="ra")
+    text(d, (2362, 92), "HOURS", font(F_DIN_ALT, 57), GREEN)
+    text(d, (2258, 154), "全年无休 · 天天为你", f_hei(31), (80, 87, 81))
+    # Right-hand support copy, centred as one block.
+    text(d, (3600, 102), "OPEN ALWAYS", font(F_DIN_ALT, 31), GREEN, anchor="ma")
+    text(d, (3600, 151), "24 / 7", font(F_DIN, 42), (79, 86, 80), anchor="ma")
     # Thin colored rule along the bottom.
     stripes(img, H - 20, height=6)
     d = ImageDraw.Draw(img)
@@ -252,16 +252,16 @@ def make_menu():
     text(d, (W // 2, 170), "城市咖啡", f_hei(38), (192, 216, 203), anchor="ma")
     d.line([(92, 232), (548, 232)], fill=(243, 227, 198, 255), width=3)
     items = [
-        ("美式咖啡", "AMERICANO", "45"),
-        ("拿铁咖啡", "LATTE", "55"),
-        ("焦糖玛奇朵", "MACCHIATO", "65"),
-        ("热巧克力", "HOT COCOA", "55"),
+        ("美式咖啡", "AMERICANO", "12"),
+        ("拿铁咖啡", "LATTE", "16"),
+        ("焦糖玛奇朵", "MACCHIATO", "18"),
+        ("热巧克力", "HOT COCOA", "15"),
     ]
     y = 278
     for cn, en, price in items:
         text(d, (92, y), cn, f_hei(39), (245, 239, 224))
         text(d, (92, y + 48), en, font(F_DIN_ALT, 23), (151, 177, 165), spacing=2)
-        text(d, (548, y + 18), f"${price}", font(F_DIN, 56), (245, 164, 92), anchor="ra")
+        text(d, (548, y + 18), f"¥{price}", font(F_DIN, 56), (245, 164, 92), anchor="ra")
         d.line([(92, y + 92), (548, y + 92)], fill=(72, 91, 83), width=2)
         y += 122
     text(d, (W // 2, 806), "OPEN DAILY", font(F_DIN_ALT, 30), (126, 203, 173), anchor="ma", spacing=6)
@@ -335,14 +335,14 @@ def make_hotfood_menu():
     d.rounded_rectangle([18, 18, W - 18, H - 18], radius=12, outline=(224, 182, 112), width=4)
     d.rectangle([18, 18, W - 18, 118], fill=(186, 56, 45))
     text(d, (W // 2, 66), "热食 HOT FOOD", f_hei(48), (255, 245, 220), anchor="mm")
-    items = [("茶叶蛋", "TEA EGG", "10"), ("关东煮", "ODEN", "35起"),
-             ("热狗", "HOT DOG", "35"), ("微波食品", "MICROWAVE", "65起"),
-             ("包子", "STEAMED BUN", "25"), ("咖啡", "CITY CAFÉ", "45起")]
+    items = [("茶叶蛋", "TEA EGG", "2"), ("关东煮", "ODEN", "6起"),
+             ("热狗", "HOT DOG", "6"), ("微波食品", "MICROWAVE", "12起"),
+             ("包子", "STEAMED BUN", "4"), ("咖啡", "CITY CAFÉ", "12起")]
     y = 156
     for cn, en, price in items:
         d.text((50, y), cn, font=font(F_HEI, 34), fill=(247, 233, 204))
         d.text((52, y + 42), en, font=font(F_DIN_ALT, 21), fill=(152, 184, 166), spacing=2)
-        d.text((W - 48, y + 20), f"${price}", font=font(F_DIN, 42), fill=(244, 170, 88), anchor="ra")
+        d.text((W - 48, y + 20), f"¥{price}", font=font(F_DIN, 42), fill=(244, 170, 88), anchor="ra")
         d.line([(48, y + 74), (W - 48, y + 74)], fill=(99, 117, 105), width=1)
         y += 94
     text(d, (W // 2, 737), "现点现做 / MADE TO ORDER", f_hei(21), (136, 190, 161), anchor="mm")
@@ -1037,17 +1037,17 @@ def make_shelf_tag_atlas():
     img = Image.new("RGB", (W, H), (245, 243, 234))
     d = ImageDraw.Draw(img)
     tags = [
-        ("特价", "49", "元"), ("特价", "35", "元"), ("新品", "59", "元"),
-        ("任选", "2件99", ""), ("会员", "39", "元"), ("限时", "45", "元"),
-        ("特价", "25", "元"), ("加购", "10", "元"), ("买一送一", "55", "元"),
-        ("特价", "69", "元"), ("早餐", "49", "元"), ("冰品", "39", "元"),
-        ("咖啡", "45", "元"), ("茶饮", "35", "元"), ("零食", "29", "元"),
-        ("特价", "79", "元"), ("任选", "3件100", ""), ("特价", "19", "元"),
-        ("大包装", "89", "元"), ("人气", "59", "元"), ("季节限定", "65", "元"),
-        ("特价", "15", "元"), ("点心", "39", "元"), ("饮料", "25", "元"),
-        ("特价", "55", "元"), ("早餐", "59", "元"), ("点数", "2倍", ""),
-        ("新品", "49", "元"), ("特价", "33", "元"), ("任选", "4件100", ""),
-        ("特价", "99", "元"), ("限量", "69", "元"),
+        ("特价", "9", "元"), ("特价", "6", "元"), ("新品", "12", "元"),
+        ("任选", "2件19", ""), ("会员", "8", "元"), ("限时", "10", "元"),
+        ("特价", "5", "元"), ("加购", "3", "元"), ("买一送一", "12", "元"),
+        ("特价", "15", "元"), ("早餐", "9", "元"), ("冰品", "8", "元"),
+        ("咖啡", "12", "元"), ("茶饮", "6", "元"), ("零食", "7", "元"),
+        ("特价", "16", "元"), ("任选", "3件20", ""), ("特价", "4", "元"),
+        ("大包装", "18", "元"), ("人气", "12", "元"), ("季节限定", "13", "元"),
+        ("特价", "3", "元"), ("点心", "8", "元"), ("饮料", "5", "元"),
+        ("特价", "10", "元"), ("早餐", "12", "元"), ("点数", "2倍", ""),
+        ("新品", "9", "元"), ("特价", "7", "元"), ("任选", "4件25", ""),
+        ("特价", "19", "元"), ("限量", "15", "元"),
     ]
     for i, (label, price, unit) in enumerate(tags):
         x0 = (i % cols) * cw

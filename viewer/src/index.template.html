@@ -38,17 +38,23 @@
       <div class="mode-bar-title">LIGHTING</div>
       <div class="mode-switch" role="group" aria-label="光线模式">
         <button class="mode-btn" type="button" data-mode="day" aria-pressed="false" title="日间">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
-            <circle cx="12" cy="12" r="4.1"/>
-            <path d="M12 2.7v2.2M12 19.1v2.2M2.7 12h2.2M19.1 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4 17 7M7 17l-1.6 1.6" stroke-linecap="round"/>
-          </svg>
+          <svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <circle cx="12" cy="12" r="4" />
+  <path d="M12 2v2" />
+  <path d="M12 20v2" />
+  <path d="m4.93 4.93 1.41 1.41" />
+  <path d="m17.66 17.66 1.41 1.41" />
+  <path d="M2 12h2" />
+  <path d="M20 12h2" />
+  <path d="m6.34 17.66-1.41 1.41" />
+  <path d="m19.07 4.93-1.41 1.41" />
+        </svg>
           <span class="mode-copy"><b>日间</b><i>DAY</i></span>
         </button>
         <button class="mode-btn is-active" type="button" data-mode="night" aria-pressed="true" title="夜晚">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
-            <path d="M20.2 14.6A8.3 8.3 0 0 1 9.4 3.8a8.4 8.4 0 1 0 10.8 10.8Z" stroke-linejoin="round"/>
-            <path d="M17.4 4.1v2M16.4 5.1h2" stroke-linecap="round" opacity=".7"/>
-          </svg>
+          <svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
+        </svg>
           <span class="mode-copy"><b>夜晚</b><i>NIGHT</i></span>
         </button>
       </div>
@@ -76,37 +82,47 @@
 
     <nav class="view-tools" aria-label="视角控制">
       <button class="tool-btn tool-enter" id="btn-enter" type="button" aria-pressed="false" title="走进店内">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.45" aria-hidden="true">
-          <path d="M5 20V4.6h9.2v15.4M8.2 20V8.4h11v11.6M14.2 12.1h.1" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M17.6 4.4 14.8 7.2M14.8 4.4l2.8 2.8" stroke-linecap="round"/>
+        <svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <path d="M10 21H2" />
+  <path d="M10 3H7a2 2 0 00-2 2v16" />
+  <path d="M14 12h.01" />
+  <path d="M19 21V5a2 2 0 00-1.675-1.974l-6.163-1.013A1 1 0 0010 3v18a1 1 0 001.124.992z" />
+  <path d="M22 21h-3" />
         </svg>
         <span class="sr-only">走进店内</span>
       </button>
       <button class="tool-btn" id="btn-photo" type="button" aria-pressed="false" title="拍照模式">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.45" aria-hidden="true">
-          <path d="M4.3 8.2h3.1l1.4-2h6.4l1.4 2h3.1v11.4H4.3V8.2Z" stroke-linejoin="round"/>
-          <circle cx="12" cy="13.4" r="3.4"/>
+        <svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z" />
+  <circle cx="12" cy="13" r="3" />
         </svg>
         <span class="sr-only">拍照模式</span>
       </button>
       <button class="tool-btn is-on" id="btn-rotate" type="button" aria-pressed="true" title="自动旋转">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.45" aria-hidden="true">
-          <path d="M19.8 8.2v4.6h-4.6M4.2 15.8v-4.6h4.6" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M17.8 15.8A7.1 7.1 0 0 1 5.7 14M6.2 8.2A7.1 7.1 0 0 1 18.3 10" stroke-linecap="round"/>
+        <svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8" />
+  <path d="M21 3v5h-5" />
         </svg>
         <span class="tool-led" aria-hidden="true"></span>
         <span class="sr-only">自动旋转</span>
       </button>
       <button class="tool-btn" id="btn-reset" type="button" title="重置视角">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.45" aria-hidden="true">
-          <circle cx="12" cy="12" r="6.7" opacity=".38"/>
-          <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/>
-          <path d="M12 2.8v3.1M12 18.1v3.1M2.8 12h3.1M18.1 12h3.1" stroke-linecap="round"/>
+        <svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <line x1="2" x2="5" y1="12" y2="12" />
+  <line x1="19" x2="22" y1="12" y2="12" />
+  <line x1="12" x2="12" y1="2" y2="5" />
+  <line x1="12" x2="12" y1="19" y2="22" />
+  <circle cx="12" cy="12" r="7" />
+  <circle cx="12" cy="12" r="3" />
         </svg>
         <span class="sr-only">重置视角</span>
       </button>
       <button class="tool-btn tool-info" id="btn-info" type="button" title="关于这件作品">
-        <span>i</span><span class="sr-only">关于这件作品</span>
+        <svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+        </svg><span class="sr-only">关于这件作品</span>
       </button>
     </nav>
 
@@ -119,37 +135,49 @@
 
     <nav class="route-bar" id="route-bar" aria-label="店内导览">
       <span class="route-title"><b>店内导览</b><i>点击前往</i></span>
-      <button type="button" data-route-stop="entrance">入口</button>
-      <button type="button" data-route-stop="drinks">冷藏饮料</button>
-      <button type="button" data-route-stop="snacks">零食</button>
-      <button type="button" data-route-stop="daily">日用品</button>
+      <button type="button" data-route-stop="entrance"><svg class="route-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <path d="m9 18 6-6-6-6" />
+        </svg>入口</button>
+      <button type="button" data-route-stop="drinks"><svg class="route-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <path d="m9 18 6-6-6-6" />
+        </svg>冷藏饮料</button>
+      <button type="button" data-route-stop="snacks"><svg class="route-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <path d="m9 18 6-6-6-6" />
+        </svg>零食</button>
+      <button type="button" data-route-stop="daily"><svg class="route-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <path d="m9 18 6-6-6-6" />
+        </svg>日用品</button>
     </nav>
 
     <div class="store-services" id="store-services" aria-label="店内服务">
       <button class="service-btn service-coffee" id="btn-coffee" type="button" aria-haspopup="dialog">
         <span class="service-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35">
-            <path d="M6.4 8.2h11.2v4.6a5.6 5.6 0 0 1-11.2 0V8.2Z" stroke-linejoin="round"/>
-            <path d="M17.6 9.3h1.2a2.3 2.3 0 0 1 0 4.6h-1.2M8.4 4.2V2.6M12 4.2V2.6M15.6 4.2V2.6" stroke-linecap="round"/>
-          </svg>
+          <svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <path d="M10 2v2" />
+  <path d="M14 2v2" />
+  <path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1" />
+  <path d="M6 2v2" />
+        </svg>
         </span>
         <span class="service-copy"><b>点咖啡</b><i>COFFEE</i></span>
       </button>
       <button class="service-btn service-shop" id="btn-shop" type="button" aria-haspopup="dialog">
         <span class="service-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35">
-            <path d="M4.8 8.5h14.4l-1.1 11.1H5.9L4.8 8.5Z" stroke-linejoin="round"/>
-            <path d="M8.5 8.5V7a3.5 3.5 0 0 1 7 0v1.5" stroke-linecap="round"/>
-          </svg>
+          <svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <path d="M15 21v-5a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v5" />
+  <path d="M17.774 10.31a1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.451 0 1.12 1.12 0 0 0-1.548 0 2.5 2.5 0 0 1-3.452 0 1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.77-3.248l2.889-4.184A2 2 0 0 1 7 2h10a2 2 0 0 1 1.653.873l2.895 4.192a2.5 2.5 0 0 1-3.774 3.244" />
+  <path d="M4 10.95V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8.05" />
+        </svg>
         </span>
         <span class="service-copy"><b>逛货架</b><i>NIGHT SHOP</i></span>
       </button>
       <button class="service-btn service-bag" id="btn-bag" type="button" aria-label="查看购物袋" title="购物袋">
         <span class="service-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35">
-            <path d="M4.8 8.5h14.4l-1.1 11.1H5.9L4.8 8.5Z" stroke-linejoin="round"/>
-            <path d="M8.5 8.5V7a3.5 3.5 0 0 1 7 0v1.5" stroke-linecap="round"/>
-          </svg>
+          <svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <path d="M16 10a4 4 0 0 1-8 0" />
+  <path d="M3.103 6.034h17.794" />
+  <path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z" />
+        </svg>
         </span>
         <b class="bag-count" id="bag-count">0</b>
       </button>
@@ -189,7 +217,10 @@
     <section class="coffee-panel" role="dialog" aria-modal="true" aria-labelledby="coffee-title">
       <div class="coffee-topline"><span>7-ELEVEN / NIGHT COFFEE</span></div>
       <button class="coffee-close" id="coffee-close" type="button" aria-label="关闭咖啡点单">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke-linecap="round"/></svg>
+        <svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <path d="M18 6 6 18" />
+  <path d="m6 6 12 12" />
+        </svg>
       </button>
       <header class="coffee-header">
         <div class="coffee-stripes"><i></i><i></i><i></i></div>
@@ -221,19 +252,19 @@
               </div>
               <div class="coffee-menu" id="coffee-menu">
                 <button class="coffee-option" type="button" data-coffee="americano">
-                  <span class="coffee-dot" style="--dot:#3b2418"></span><span class="coffee-option-copy"><b>美式</b><i>Americano</i></span><span class="coffee-price">NT$45</span>
+                  <span class="coffee-dot" style="--dot:#3b2418"></span><span class="coffee-option-copy"><b>美式</b><i>Americano</i></span><span class="coffee-price">¥12</span>
                 </button>
                 <button class="coffee-option is-selected" type="button" data-coffee="latte">
-                  <span class="coffee-dot" style="--dot:#b68a63"></span><span class="coffee-option-copy"><b>拿铁</b><i>Latte</i></span><span class="coffee-price">NT$55</span>
+                  <span class="coffee-dot" style="--dot:#b68a63"></span><span class="coffee-option-copy"><b>拿铁</b><i>Latte</i></span><span class="coffee-price">¥16</span>
                 </button>
                 <button class="coffee-option" type="button" data-coffee="cappuccino">
-                  <span class="coffee-dot" style="--dot:#c9a27b"></span><span class="coffee-option-copy"><b>卡布奇诺</b><i>Cappuccino</i></span><span class="coffee-price">NT$55</span>
+                  <span class="coffee-dot" style="--dot:#c9a27b"></span><span class="coffee-option-copy"><b>卡布奇诺</b><i>Cappuccino</i></span><span class="coffee-price">¥16</span>
                 </button>
                 <button class="coffee-option" type="button" data-coffee="mocha">
-                  <span class="coffee-dot" style="--dot:#6d4934"></span><span class="coffee-option-copy"><b>摩卡</b><i>Mocha</i></span><span class="coffee-price">NT$65</span>
+                  <span class="coffee-dot" style="--dot:#6d4934"></span><span class="coffee-option-copy"><b>摩卡</b><i>Mocha</i></span><span class="coffee-price">¥18</span>
                 </button>
               </div>
-              <div class="coffee-total-row"><span>合计 / TOTAL</span><strong id="coffee-total">NT$55</strong></div>
+              <div class="coffee-total-row"><span>合计 / TOTAL</span><strong id="coffee-total">¥16</strong></div>
               <button class="coffee-primary" id="coffee-next" type="button">前往付款</button>
               <p class="coffee-fineprint">单杯直接结账，不加入购物袋。</p>
             </div>
@@ -244,13 +275,13 @@
           <div class="coffee-pay-grid">
             <div class="coffee-pay-summary">
               <div class="coffee-summary-top"><span>订单摘要</span><span id="coffee-order-label">SELF-SERVICE</span></div>
-              <div class="coffee-summary-item"><span id="coffee-pay-name">热拿铁</span><b id="coffee-pay-price">NT$55</b></div>
+              <div class="coffee-summary-item"><span id="coffee-pay-name">热拿铁</span><b id="coffee-pay-price">¥16</b></div>
               <label class="discount-toggle" for="coffee-discount">
                 <input type="checkbox" id="coffee-discount" />
-                <span><b>开亚员工 8.8 折</b><i>KAIYA STAFF · 12% OFF</i></span>
+                <span><b>X用户 8.8 折</b><i>X USER · 12% OFF</i></span>
               </label>
-              <div class="checkout-discount" id="coffee-discount-line" hidden><span>员工折扣</span><b id="coffee-discount-value">-NT$0</b></div>
-              <div class="coffee-summary-total"><span>应付金额</span><strong id="coffee-pay-total">NT$55</strong></div>
+              <div class="checkout-discount" id="coffee-discount-line" hidden><span>X用户折扣</span><b id="coffee-discount-value">-¥0</b></div>
+              <div class="coffee-summary-total"><span>应付金额 <small>人民币 CNY</small></span><strong id="coffee-pay-total">¥16</strong></div>
               <p>此页为互动展示。未连接任何真实支付服务，也不会产生真实交易。</p>
             </div>
             <div class="coffee-pay-box">
@@ -272,7 +303,9 @@
 
         <section class="coffee-stage" data-coffee-stage="success">
           <div class="coffee-success-head">
-            <span class="coffee-check">✓</span>
+            <span class="coffee-check"><svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <path d="M20 6 9 17l-5-5" />
+        </svg></span>
             <div><h3>付款完成 <small>SIMULATED</small></h3><p>已为你产生电子消费明细与深夜咖啡卡，可下载保存。</p></div>
           </div>
           <div class="coffee-artifacts">
@@ -303,7 +336,10 @@
     <section class="shop-panel" role="dialog" aria-modal="true" aria-labelledby="shop-title">
       <div class="shop-topline"><span>7-ELEVEN / NIGHT SHOP</span></div>
       <button class="shop-close" id="shop-close" type="button" aria-label="关闭购物">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke-linecap="round"/></svg>
+        <svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <path d="M18 6 6 18" />
+  <path d="m6 6 12 12" />
+        </svg>
       </button>
       <header class="shop-header">
         <div class="shop-stripes"><i></i><i></i><i></i></div>
@@ -327,7 +363,7 @@
               <div class="shop-cart-lines" id="shop-cart-lines">
                 <p class="shop-cart-empty">购物袋还是空的。<br>挑一件深夜补给吧。</p>
               </div>
-              <div class="shop-cart-total"><span>合计 / TOTAL</span><strong id="shop-total">NT$0</strong></div>
+              <div class="shop-cart-total"><span>合计 / TOTAL</span><strong id="shop-total">¥0</strong></div>
               <button class="shop-primary" id="shop-checkout" type="button" disabled>前往结账</button>
               <p class="shop-note">咖啡独立单杯结账 · 不加入购物袋</p>
             </aside>
@@ -341,10 +377,10 @@
               <div class="shop-pay-lines" id="shop-pay-lines"></div>
               <label class="discount-toggle discount-toggle-dark" for="shop-discount">
                 <input type="checkbox" id="shop-discount" />
-                <span><b>开亚员工 8.8 折</b><i>KAIYA STAFF · 12% OFF</i></span>
+                <span><b>X用户 8.8 折</b><i>X USER · 12% OFF</i></span>
               </label>
-              <div class="checkout-discount" id="shop-discount-line" hidden><span>员工折扣</span><b id="shop-discount-value">-NT$0</b></div>
-              <div class="shop-pay-total"><span>应付金额</span><strong id="shop-pay-total">NT$0</strong></div>
+              <div class="checkout-discount" id="shop-discount-line" hidden><span>X用户折扣</span><b id="shop-discount-value">-¥0</b></div>
+              <div class="shop-pay-total"><span>应付金额 <small>人民币 CNY</small></span><strong id="shop-pay-total">¥0</strong></div>
               <p>此页为互动展示。没有连接任何真实支付服务，也不会产生真实交易。</p>
             </div>
             <div class="shop-pay-box">
@@ -366,7 +402,9 @@
 
         <section class="shop-stage" data-shop-stage="success">
           <div class="shop-success-head">
-            <span class="shop-check">✓</span>
+            <span class="shop-check"><svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <path d="M20 6 9 17l-5-5" />
+        </svg></span>
             <div><h3>购物完成 <small>SIMULATED</small></h3><p>电子购物明细已产生，可下载保存。</p></div>
           </div>
           <div class="shop-receipt-stage">
@@ -408,8 +446,9 @@
     <div class="modal-backdrop" data-close="1"></div>
     <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="info-title">
       <button class="modal-close" id="info-close" type="button" aria-label="关闭">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
-          <path d="m6 6 12 12M18 6 6 18" stroke-linecap="round"/>
+        <svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <path d="M18 6 6 18" />
+  <path d="m6 6 12 12" />
         </svg>
       </button>
       <div class="modal-topline"><span>ABOUT THE STUDY</span></div>
@@ -437,7 +476,7 @@
       <div class="modal-note">
         <p>操作：拖动环绕 · 滚轮／双指缩放 · 双击复位 · 点玻璃门或右下角（手机右上角）门图示、按 <b>E</b> 走进店内，店内拖动环顾 · 点左下角「店内导览」或货架标签走动 · 按 <b>S</b> 或点「逛货架」购物，<b>B</b> 打开购物袋 · 按 <b>C</b> 点一杯深夜咖啡 · 0–24 时日光时间轴默认当前时间，可拖动 · <b>P</b> 进入拍照模式并可保存 PNG · 数字键 1 / 2 切换日／夜 · R 重置视角 · I 打开本说明 · 空格键暂停旋转 · ESC 关闭面板、离开店内或关闭窗口。</p>
         <p>咖啡：美式 / 拿铁 / 卡布奇诺 / 摩卡，可选热或冰；Alipay、WeChat Pay、银联为模拟支付。完成后可下载电子消费明细与深夜咖啡卡，不加入购物袋，也不产生真实交易。</p>
-        <p>购物：走到冷藏饮料、零食或日用品货架，把商品加入购物袋、调整数量，再以三种方式模拟结账并下载购物明细。日用品区提供安全套、湿纸巾与打火机。两笔订单结账时都可勾选「开亚员工 8.8 折」。咖啡与购物是两笔独立订单。</p>
+        <p>购物：走到冷藏饮料、零食或日用品货架，把商品加入购物袋、调整数量，再以三种方式模拟结账并下载购物明细。日用品区提供安全套、湿纸巾与打火机。两笔订单结账时都可勾选「X用户 8.8 折」。咖啡与购物是两笔独立订单。</p>
         <p class="legal">独立创作之建筑光影研究，非 7-Eleven, Inc. 官方作品或实际店铺。7-ELEVEN 名称、标志与相关商标属于其权利人；场景为独立创作。</p>
       </div>
       <div class="modal-sign">PROCEDURAL CORNER STORE · TAIPEI · 2026</div>

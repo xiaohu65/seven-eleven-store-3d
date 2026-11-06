@@ -110,7 +110,7 @@ check(coffeePay.disabled===false&&coffeePay.qr===320,'simulated QR ready');
 await page.click('#coffee-discount');
 const coffeeDiscount=await page.evaluate(()=>({total:document.getElementById('coffee-pay-total').textContent,line:document.getElementById('coffee-discount-line').hidden,discount:document.getElementById('coffee-discount-value').textContent}));
 console.log('coffee discount',coffeeDiscount);
-check(coffeeDiscount.total==='NT$57','coffee employee discount total');
+check(coffeeDiscount.total==='¥16','coffee X user discount total');
 check(coffeeDiscount.line===false,'coffee discount line visible');
 await page.click('#coffee-pay'); await new Promise(r=>setTimeout(r,1550));
 const coffeeDone=await page.evaluate(()=>({
@@ -151,7 +151,7 @@ check(await page.evaluate(()=>!document.getElementById('shop-pay').disabled),'sh
 await page.click('#shop-discount');
 const shopDiscount=await page.evaluate(()=>({total:document.getElementById('shop-pay-total').textContent,line:document.getElementById('shop-discount-line').hidden,discount:document.getElementById('shop-discount-value').textContent}));
 console.log('shop discount',shopDiscount);
-check(shopDiscount.total!=='NT$74','shop employee discount applied');
+check(shopDiscount.total!=='¥25','shop X user discount applied');
 check(shopDiscount.line===false,'shop discount line visible');
 await page.click('#shop-pay'); await new Promise(r=>setTimeout(r,1600));
 const shopDone=await page.evaluate(()=>({

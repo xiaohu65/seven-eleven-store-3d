@@ -1375,10 +1375,10 @@ document.getElementById('btn-photo-save')?.addEventListener('click', downloadPho
 // Night coffee: a small self-service order, payment and artifact flow
 // ---------------------------------------------------------------------------
 const COFFEE_MENU = {
-  americano: { name: '美式', en: 'Americano', price: 45, color: '#3b2418' },
-  latte: { name: '拿铁', en: 'Latte', price: 55, color: '#b68a63' },
-  cappuccino: { name: '卡布奇诺', en: 'Cappuccino', price: 55, color: '#c9a27b' },
-  mocha: { name: '摩卡', en: 'Mocha', price: 65, color: '#6d4934' },
+  americano: { name: '美式', en: 'Americano', price: 12, color: '#3b2418' },
+  latte: { name: '拿铁', en: 'Latte', price: 16, color: '#b68a63' },
+  cappuccino: { name: '卡布奇诺', en: 'Cappuccino', price: 16, color: '#c9a27b' },
+  mocha: { name: '摩卡', en: 'Mocha', price: 18, color: '#6d4934' },
 };
 const PAY_METHODS = {
   alipay: { name: 'Alipay', zh: '支付宝', color: '#1677ff', mark: '支' },
@@ -1430,9 +1430,9 @@ function coffeeAmounts() {
 
 function renderCoffeeDiscount() {
   const amounts = coffeeAmounts();
-  if (coffeePayTotal) coffeePayTotal.textContent = `NT$${amounts.total}`;
+  if (coffeePayTotal) coffeePayTotal.textContent = `¥${amounts.total}`;
   if (coffeeDiscountLine) coffeeDiscountLine.hidden = amounts.discount <= 0;
-  if (coffeeDiscountValue) coffeeDiscountValue.textContent = `-NT$${amounts.discount}`;
+  if (coffeeDiscountValue) coffeeDiscountValue.textContent = `-¥${amounts.discount}`;
 }
 
 function renderCoffee() {
@@ -1448,9 +1448,9 @@ function renderCoffee() {
     coffeeCupScene.style.setProperty('--coffee-liquid', item.color);
     coffeeCupScene.classList.toggle('is-iced', !coffeeState.hot);
   }
-  if (coffeeTotal) coffeeTotal.textContent = `NT$${item.price}`;
+  if (coffeeTotal) coffeeTotal.textContent = `¥${item.price}`;
   if (coffeePayName) coffeePayName.textContent = coffeeDisplayName();
-  if (coffeePayPrice) coffeePayPrice.textContent = `NT$${item.price}`;
+  if (coffeePayPrice) coffeePayPrice.textContent = `¥${item.price}`;
   renderCoffeeDiscount();
 }
 
@@ -1626,7 +1626,7 @@ function drawReceipt(order) {
   ctx.textAlign = 'right';
   ctx.font = `400 15px ${mono}`;
   ctx.fillText(`x ${order.qty}`, 560, 300);
-  ctx.fillText(`NT$${order.originalTotal ?? order.total}`, 672, 300);
+  ctx.fillText(`¥${order.originalTotal ?? order.total}`, 672, 300);
   ctx.textAlign = 'left';
   ctx.fillStyle = 'rgba(27,42,35,.58)';
   ctx.font = `400 12px ${mono}`;
@@ -1636,17 +1636,17 @@ function drawReceipt(order) {
   ctx.fillStyle = '#26382d';
   ctx.font = `400 14px ${mono}`;
   let ty = 398;
-  ctx.fillText('SUBTOTAL', 48, ty); ctx.textAlign = 'right'; ctx.fillText(`NT$${order.originalTotal ?? order.total}`, 672, ty);
+  ctx.fillText('SUBTOTAL', 48, ty); ctx.textAlign = 'right'; ctx.fillText(`¥${order.originalTotal ?? order.total}`, 672, ty);
   ctx.textAlign = 'left'; ty += 27;
   if (order.discount > 0) {
     ctx.fillStyle = '#9c3c2f';
-    ctx.fillText('STAFF 8.8', 48, ty); ctx.textAlign = 'right'; ctx.fillText(`-NT$${order.discount}`, 672, ty);
+    ctx.fillText('X USER 8.8', 48, ty); ctx.textAlign = 'right'; ctx.fillText(`-¥${order.discount}`, 672, ty);
     ctx.textAlign = 'left'; ctx.fillStyle = '#26382d'; ty += 27;
   }
   ctx.fillText('TAX', 48, ty); ctx.textAlign = 'right'; ctx.fillText('INCLUDED', 672, ty);
   ctx.textAlign = 'left'; ty += 38;
   ctx.font = `600 24px ${serif}`;
-  ctx.fillText('TOTAL', 48, ty); ctx.textAlign = 'right'; ctx.font = `500 34px ${serif}`; ctx.fillText(`NT$${order.total}`, 672, ty); ty += 42;
+  ctx.fillText('TOTAL', 48, ty); ctx.textAlign = 'right'; ctx.font = `500 34px ${serif}`; ctx.fillText(`¥${order.total}`, 672, ty); ty += 42;
   ctx.textAlign = 'left';
   ctx.font = `400 13px ${mono}`;
   ctx.fillText(`PAYMENT  ${order.method.name.toUpperCase()} / ${order.method.zh}`, 48, ty); ty += 36;
@@ -1795,14 +1795,14 @@ function drawCoffeeCard(order) {
   if (order.discount > 0) {
     ctx.fillStyle = '#9c3c2f';
     ctx.font = `400 13px ${mono}`;
-    ctx.fillText(`STAFF 8.8 · -NT$${order.discount}`, 58, 1118);
+    ctx.fillText(`X USER 8.8 · -¥${order.discount}`, 58, 1118);
     ctx.fillStyle = 'rgba(35,55,43,.55)';
   }
   ctx.textAlign = 'right';
   ctx.fillText('中山门店 · TAIPEI', W - 58, 1063);
   ctx.font = `600 20px ${serif}`;
   ctx.fillStyle = '#20382b';
-  ctx.fillText('NT$' + order.total, W - 58, 1092);
+  ctx.fillText('¥' + order.total, W - 58, 1092);
   ctx.textAlign = 'left';
   // Barcode / demo footer.
   let seed = 0;
@@ -1920,15 +1920,15 @@ const SHOP_CATEGORIES = {
   daily: { label: '日用品', en: 'DAILY GOODS' },
 };
 const SHOP_PRODUCTS = {
-  tea: { id: 'tea', category: 'drinks', name: '冷萃绿茶', en: 'COLD BREW TEA', price: 25, color: '#3f6f51', art: 'bottle' },
-  cola: { id: 'cola', category: 'drinks', name: '深夜可乐', en: 'NIGHT COLA', price: 35, color: '#8e2d2d', art: 'can' },
-  water: { id: 'water', category: 'drinks', name: '矿泉水', en: 'MINERAL WATER', price: 20, color: '#4f8096', art: 'bottle' },
-  chips: { id: 'chips', category: 'snacks', name: '海盐洋芋片', en: 'SEA SALT CHIPS', price: 35, color: '#c49435', art: 'chips' },
-  chocolate: { id: 'chocolate', category: 'snacks', name: '黑巧克力', en: 'DARK CHOCOLATE', price: 45, color: '#4a2c20', art: 'bar' },
-  crackers: { id: 'crackers', category: 'snacks', name: '起司苏打饼', en: 'CHEESE CRACKERS', price: 30, color: '#b9834e', art: 'crackers' },
-  condom: { id: 'condom', category: 'daily', name: '安全套', en: 'CONDOMS', price: 39, color: '#9d5a73', art: 'foil' },
-  wipes: { id: 'wipes', category: 'daily', name: '湿纸巾', en: 'WET WIPES', price: 35, color: '#567b83', art: 'pack' },
-  lighter: { id: 'lighter', category: 'daily', name: '打火机', en: 'LIGHTER', price: 25, color: '#a9503d', art: 'lighter' },
+  tea: { id: 'tea', category: 'drinks', name: '冷萃绿茶', en: 'COLD BREW TEA', price: 6, color: '#3f6f51', art: 'bottle' },
+  cola: { id: 'cola', category: 'drinks', name: '深夜可乐', en: 'NIGHT COLA', price: 4, color: '#8e2d2d', art: 'can' },
+  water: { id: 'water', category: 'drinks', name: '矿泉水', en: 'MINERAL WATER', price: 2, color: '#4f8096', art: 'bottle' },
+  chips: { id: 'chips', category: 'snacks', name: '海盐洋芋片', en: 'SEA SALT CHIPS', price: 7, color: '#c49435', art: 'chips' },
+  chocolate: { id: 'chocolate', category: 'snacks', name: '黑巧克力', en: 'DARK CHOCOLATE', price: 9, color: '#4a2c20', art: 'bar' },
+  crackers: { id: 'crackers', category: 'snacks', name: '起司苏打饼', en: 'CHEESE CRACKERS', price: 6, color: '#b9834e', art: 'crackers' },
+  condom: { id: 'condom', category: 'daily', name: '安全套', en: 'CONDOMS', price: 18, color: '#9d5a73', art: 'foil' },
+  wipes: { id: 'wipes', category: 'daily', name: '湿纸巾', en: 'WET WIPES', price: 5, color: '#567b83', art: 'pack' },
+  lighter: { id: 'lighter', category: 'daily', name: '打火机', en: 'LIGHTER', price: 3, color: '#a9503d', art: 'lighter' },
 };
 const shopState = {
   open: false, stage: 'browse', category: 'drinks', cart: {}, method: null, discount: false,
@@ -1969,9 +1969,9 @@ function shopAmounts() {
 }
 function renderShopDiscount() {
   const amounts = shopAmounts();
-  if (shopPayTotalEl) shopPayTotalEl.textContent = `NT$${amounts.total}`;
+  if (shopPayTotalEl) shopPayTotalEl.textContent = `¥${amounts.total}`;
   if (shopDiscountLine) shopDiscountLine.hidden = amounts.discount <= 0;
-  if (shopDiscountValue) shopDiscountValue.textContent = `-NT$${amounts.discount}`;
+  if (shopDiscountValue) shopDiscountValue.textContent = `-¥${amounts.discount}`;
 }
 
 function productArtSvg(type, color) {
@@ -2035,8 +2035,11 @@ function renderShopProducts() {
       <div class="shop-product-info">
         <div class="shop-product-name">${item.name}</div>
         <div class="shop-product-en">${item.en}</div>
-        <div class="shop-product-bottom"><span class="shop-price">NT$${item.price}</span>
-          <button class="shop-add" type="button" data-shop-add="${item.id}" aria-label="加入${item.name}">+</button>
+        <div class="shop-product-bottom"><span class="shop-price">¥${item.price}</span>
+          <button class="shop-add" type="button" data-shop-add="${item.id}" aria-label="加入${item.name}"><svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <path d="M5 12h14" />
+  <path d="M12 5v14" />
+        </svg></button>
         </div>
       </div>
     </article>`;
@@ -2050,12 +2053,23 @@ function renderShopCart() {
     shopCartLinesEl.innerHTML = '<p class="shop-cart-empty">购物袋还是空的。<br>挑一件深夜补给吧。</p>';
   } else {
     shopCartLinesEl.innerHTML = items.map((item) => `<div class="shop-cart-line">
-      <div><div class="shop-cart-line-name">${item.name}</div><div class="shop-cart-line-price">NT$${item.price} × ${item.qty}</div></div>
-      <div class="shop-cart-line-total">NT$${item.lineTotal}</div>
-      <div class="shop-qty"><button type="button" data-shop-dec="${item.id}" aria-label="减少${item.name}">−</button><span>${item.qty}</span><button type="button" data-shop-inc="${item.id}" aria-label="增加${item.name}">+</button><button type="button" data-shop-del="${item.id}" aria-label="移除${item.name}">×</button></div>
+      <div><div class="shop-cart-line-name">${item.name}</div><div class="shop-cart-line-price">¥${item.price} × ${item.qty}</div></div>
+      <div class="shop-cart-line-total">¥${item.lineTotal}</div>
+      <div class="shop-qty"><button type="button" data-shop-dec="${item.id}" aria-label="减少${item.name}"><svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <path d="M5 12h14" />
+        </svg></button><span>${item.qty}</span><button type="button" data-shop-inc="${item.id}" aria-label="增加${item.name}"><svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <path d="M5 12h14" />
+  <path d="M12 5v14" />
+        </svg></button><button type="button" data-shop-del="${item.id}" aria-label="移除${item.name}"><svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <path d="M10 11v6" />
+  <path d="M14 11v6" />
+  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+  <path d="M3 6h18" />
+  <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+        </svg></button></div>
     </div>`).join('');
   }
-  if (shopTotalEl) shopTotalEl.textContent = `NT$${shopTotal()}`;
+  if (shopTotalEl) shopTotalEl.textContent = `¥${shopTotal()}`;
   if (shopCheckoutBtn) shopCheckoutBtn.disabled = items.length === 0;
   syncBagBadge();
 }
@@ -2063,7 +2077,7 @@ function renderShopCart() {
 function renderShopPay() {
   const items = shopItems();
   if (shopPayLinesEl) {
-    shopPayLinesEl.innerHTML = items.map((item) => `<div class="shop-pay-line"><span>${item.name}<small> × ${item.qty}</small></span><b>NT$${item.lineTotal}</b></div>`).join('');
+    shopPayLinesEl.innerHTML = items.map((item) => `<div class="shop-pay-line"><span>${item.name}<small> × ${item.qty}</small></span><b>¥${item.lineTotal}</b></div>`).join('');
   }
   renderShopDiscount();
 }
@@ -2201,21 +2215,21 @@ function drawShopReceipt(order) {
   let y = 294;
   for (const item of order.items) {
     ctx.fillStyle = '#26382d'; ctx.font = `500 20px ${serif}`; ctx.fillText(item.name, 48, y);
-    ctx.fillStyle = 'rgba(38,56,45,.5)'; ctx.font = `400 12px ${mono}`; ctx.fillText(`x${item.qty}  NT$${item.price}`, 48, y + 22);
-    ctx.textAlign = 'right'; ctx.fillStyle = '#26382d'; ctx.font = `400 14px ${mono}`; ctx.fillText(`NT$${item.lineTotal}`, 672, y);
+    ctx.fillStyle = 'rgba(38,56,45,.5)'; ctx.font = `400 12px ${mono}`; ctx.fillText(`x${item.qty}  ¥${item.price}`, 48, y + 22);
+    ctx.textAlign = 'right'; ctx.fillStyle = '#26382d'; ctx.font = `400 14px ${mono}`; ctx.fillText(`¥${item.lineTotal}`, 672, y);
     ctx.textAlign = 'left';
     y += lineH;
   }
   ctx.strokeStyle = 'rgba(27,42,35,.2)'; ctx.beginPath(); ctx.moveTo(48, y + 2); ctx.lineTo(672, y + 2); ctx.stroke(); y += 40;
   ctx.fillStyle = '#26382d'; ctx.font = `400 14px ${mono}`;
-  ctx.textAlign = 'left'; ctx.fillText('SUBTOTAL', 48, y); ctx.textAlign = 'right'; ctx.fillText(`NT$${order.originalTotal ?? order.total}`, 672, y); y += 28;
+  ctx.textAlign = 'left'; ctx.fillText('SUBTOTAL', 48, y); ctx.textAlign = 'right'; ctx.fillText(`¥${order.originalTotal ?? order.total}`, 672, y); y += 28;
   ctx.textAlign = 'left';
   if (order.discount > 0) {
-    ctx.fillStyle = '#9c3c2f'; ctx.fillText('STAFF 8.8', 48, y); ctx.textAlign = 'right'; ctx.fillText(`-NT$${order.discount}`, 672, y);
+    ctx.fillStyle = '#9c3c2f'; ctx.fillText('X USER 8.8', 48, y); ctx.textAlign = 'right'; ctx.fillText(`-¥${order.discount}`, 672, y);
     ctx.textAlign = 'left'; ctx.fillStyle = '#26382d'; y += 28;
   }
   ctx.fillText('TAX', 48, y); ctx.textAlign = 'right'; ctx.fillText('INCLUDED', 672, y); y += 38;
-  ctx.textAlign = 'left'; ctx.font = `600 24px ${serif}`; ctx.fillText('TOTAL', 48, y); ctx.textAlign = 'right'; ctx.font = `500 34px ${serif}`; ctx.fillText(`NT$${order.total}`, 672, y); y += 42;
+  ctx.textAlign = 'left'; ctx.font = `600 24px ${serif}`; ctx.fillText('TOTAL', 48, y); ctx.textAlign = 'right'; ctx.font = `500 34px ${serif}`; ctx.fillText(`¥${order.total}`, 672, y); y += 42;
   ctx.textAlign = 'left'; ctx.fillStyle = '#26382d'; ctx.font = `400 13px ${mono}`;
   ctx.fillText(`PAYMENT  ${order.method.name.toUpperCase()} / ${order.method.zh}`, 48, y); y += 36;
   ctx.strokeStyle = 'rgba(27,42,35,.26)'; ctx.setLineDash([3, 5]); ctx.beginPath(); ctx.moveTo(48, y); ctx.lineTo(672, y); ctx.stroke(); ctx.setLineDash([]); y += 32;

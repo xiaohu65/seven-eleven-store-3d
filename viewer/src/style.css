@@ -189,7 +189,7 @@ body.revealed .mode-bar { opacity: 1; transform: translateY(0); }
 body.revealed .caption { opacity: 1; transform: translateY(0); }
 .caption-rule { display: flex; gap: 4px; margin-bottom: 16px; }
 .caption-rule span { width: 21px; height: 3px; border-radius: 2px; }
-.caption-rule span:nth-child(1) { background: var(--orange); width: 34px; }
+.caption-rule span:nth-child(1) { background: var(--orange); }
 .caption-rule span:nth-child(2) { background: var(--green-bright); }
 .caption-rule span:nth-child(3) { background: var(--red); }
 .caption-kicker {
@@ -651,7 +651,7 @@ body.coffee-open .hint, body.coffee-open .coffee-cta { opacity: 0 !important; po
 .coffee-header { padding: 24px 2px 14px; }
 .coffee-stripes { display: flex; gap: 4px; margin-bottom: 10px; }
 .coffee-stripes i { display: block; width: 27px; height: 3px; border-radius: 3px; }
-.coffee-stripes i:nth-child(1) { background: var(--orange); width: 39px; }
+.coffee-stripes i:nth-child(1) { background: var(--orange); }
 .coffee-stripes i:nth-child(2) { background: var(--green-bright); }
 .coffee-stripes i:nth-child(3) { background: var(--red); }
 .coffee-eyebrow { margin: 0 0 7px; font-family: var(--mono); font-size: 8px; letter-spacing: .2em; color: rgba(42, 61, 49, .55); }
@@ -861,7 +861,7 @@ body.shop-open { overflow: hidden; }
 .shop-header { padding: 24px 2px 14px; }
 .shop-stripes { display: flex; gap: 4px; margin-bottom: 10px; }
 .shop-stripes i { display: block; width: 27px; height: 3px; border-radius: 3px; }
-.shop-stripes i:nth-child(1) { background: var(--orange); width: 39px; }
+.shop-stripes i:nth-child(1) { background: var(--orange); }
 .shop-stripes i:nth-child(2) { background: var(--green-bright); }
 .shop-stripes i:nth-child(3) { background: var(--red); }
 .shop-eyebrow { margin: 0 0 7px; font-family: var(--mono); font-size: 8px; letter-spacing: .2em; color: rgba(42,61,49,.55); }
@@ -1219,4 +1219,36 @@ body.inside:not(.photo-mode):not(.coffee-open):not(.shop-open):not(.walking) .ro
     width: min(210px, calc(100vw - 28px)); min-width: 0; max-width: 210px;
     flex-direction: column; flex-wrap: nowrap;
   }
+}
+
+/* Masthead alignment, equal-width rules and Lucide icon sizing. */
+.masthead { align-items: stretch; }
+.brand-mark {
+  align-self: stretch; height: auto; margin-top: 0; padding-top: 0;
+  justify-content: flex-start; gap: 3px;
+}
+.stripe { flex: 1 1 0; height: auto; min-height: 15px; width: 5px; }
+.caption-rule span, .caption-rule span:nth-child(1) { width: 26px; }
+.coffee-stripes i, .coffee-stripes i:nth-child(1),
+.shop-stripes i, .shop-stripes i:nth-child(1) { width: 27px; }
+.lucide-icon { display: block; width: 18px; height: 18px; flex: 0 0 auto; }
+.mode-btn .lucide-icon { width: 19px; height: 19px; }
+.tool-btn .lucide-icon { width: 18px; height: 18px; }
+.service-icon .lucide-icon { width: 20px; height: 20px; }
+.coffee-close .lucide-icon, .shop-close .lucide-icon, .modal-close .lucide-icon { width: 16px; height: 16px; }
+.coffee-check .lucide-icon, .shop-check .lucide-icon { width: 16px; height: 16px; stroke-width: 2.4; }
+.shop-add .lucide-icon { width: 14px; height: 14px; }
+.shop-qty button { display: flex; align-items: center; justify-content: center; }
+.shop-qty button .lucide-icon { width: 12px; height: 12px; stroke-width: 2.1; }
+.route-bar button { display: flex; align-items: center; gap: 6px; }
+.route-bar button::before { content: none; display: none; }
+.route-chevron { width: 12px; height: 12px; flex: 0 0 12px; color: rgba(255,181,105,.72); }
+@media (max-width: 800px) {
+  .brand-mark { align-self: stretch; margin-top: 0; gap: 2px; }
+  .stripe { height: auto; min-height: 12px; width: 4px; }
+}
+
+.coffee-summary-total small, .shop-pay-total small {
+  margin-left: 6px; font-family: var(--mono); font-size: 8px;
+  font-weight: 400; letter-spacing: .08em; color: rgba(244,240,227,.55);
 }

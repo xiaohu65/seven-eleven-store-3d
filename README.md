@@ -1,6 +1,6 @@
 # 7-ELEVEN · 街角便利店 3D
 
-一个街角 7-ELEVEN 便利店的 3D 场景。**Blender 程序化建模 + Three.js 即时渲染**，包含可编辑的 `.blend` 场景、通用 `.glb` 模型，以及一个不需要网络、直接把模型与场景塞进去的单文件互动网页。
+一个街角 7-ELEVEN 便利店的 3D 场景。**Blender 程序化建模 + Three.js 即时渲染**，包含可编辑的 `.blend` 场景、通用 `.glb` 模型，以及一个不需要网络、直接把模型与场景塞进去的单文件互动网页。所有价格、收据与咖啡卡统一以人民币（¥）标示。
 
 **线上体验：** <https://xiaohu65.github.io/seven-eleven-store-3d/>
 
@@ -57,28 +57,28 @@
 
 ### 商品与购物袋
 
-| 分类 | 商品 | 价格 |
+| 分类 | 商品 | 价格（人民币） |
 | --- | --- | --- |
-| 冷藏饮料 | 冷萃绿茶 / 深夜可乐 / 矿泉水 | NT$25 / NT$35 / NT$20 |
-| 零食 | 海盐洋芋片 / 黑巧克力 / 起司苏打饼 | NT$35 / NT$45 / NT$30 |
-| 日用品 | 安全套 / 湿纸巾 / 打火机 | NT$39 / NT$35 / NT$25 |
+| 冷藏饮料 | 冷萃绿茶 / 深夜可乐 / 矿泉水 | ¥6 / ¥4 / ¥2 |
+| 零食 | 海盐洋芋片 / 黑巧克力 / 起司苏打饼 | ¥7 / ¥9 / ¥6 |
+| 日用品 | 安全套 / 湿纸巾 / 打火机 | ¥18 / ¥5 / ¥3 |
 
-购物袋支持数量加减、移除、总额与结账；结账时可勾选 **开亚员工 8.8 折**（本地模拟员工优惠）。支付成功后会产生一张 **电子购物明细 PNG**，内含多行品项、数量、单价、总额、支付方式、订单号与「非实际交易」标示。购物明细可下载；本版本没有另外制作购物卡。
+购物袋支持数量加减、移除、总额与结账；结账时可勾选 **X用户 8.8 折**（本地模拟 X 用户优惠）。支付成功后会产生一张 **电子购物明细 PNG**，内含多行品项、数量、单价、总额、支付方式、订单号与「非实际交易」标示。购物明细可下载；本版本没有另外制作购物卡。
 
 咖啡与购物是**两笔独立订单**：咖啡永远不会进入购物袋。
 
-两笔结账都可以选择 **开亚员工 8.8 折**；折后金额会同步写入电子明细。
+两笔结账都可以选择 **X用户 8.8 折**；折后金额会同步写入电子明细。
 
 ## 深夜咖啡
 
-店内限定的单杯自助流程；咖啡维持独立结账，不加入购物袋，也不连接真实支付服务。
+店内限定的单杯自助流程；咖啡维持独立结账，不加入购物袋，也不连接真实支付服务。价格单位为人民币（¥）。
 
-| 品项 | 价格 | 选项 |
+| 品项 | 价格（人民币） | 选项 |
 | --- | --- | --- |
-| 美式 Americano | NT$45 | 热／冰 |
-| 拿铁 Latte | NT$55 | 热／冰 |
-| 卡布奇诺 Cappuccino | NT$55 | 热／冰 |
-| 摩卡 Mocha | NT$65 | 热／冰 |
+| 美式 Americano | ¥12 | 热／冰 |
+| 拿铁 Latte | ¥16 | 热／冰 |
+| 卡布奇诺 Cappuccino | ¥16 | 热／冰 |
+| 摩卡 Mocha | ¥18 | 热／冰 |
 
 1. 进店后按 `C` 或点下方咖啡 CTA。
 2. 选品项与热／冰，直接前往付款。
@@ -87,7 +87,7 @@
    - **电子消费明细**：720 × 1190，热感纸风格，含订单号、时间、品项、金额、支付方式、条码与「非实际交易」标示。
    - **深夜咖啡卡**：1080 × 1350，含咖啡杯插画、品项、订单号、日期与付款方式，适合作为数字收藏或分享。
 
-所有订单号、QR 图样、金额与时间都在浏览器本地产生；没有后端、没有真实扣款、也不会寄送 email。下载即为「领取」电子明细与咖啡图片。结账时勾选「开亚员工 8.8 折」，折后金额会同步写入收据与咖啡卡。
+所有订单号、QR 图样、金额与时间都在浏览器本地产生；没有后端、没有真实扣款、也不会寄送 email。下载即为「领取」电子明细与咖啡图片。结账时勾选「X用户 8.8 折」，折后金额会同步写入收据与咖啡卡。
 
 ## 店面细节
 
@@ -113,7 +113,7 @@
 | 网格物件 | 628 个（Blender 原始场景；网页载入后会自动合并为较少 draw call） |
 | 贴图 | 38 张内嵌图像（GLB 内） |
 | 模型单位 | 米；Blender 为 Z-up，glTF 为 Y-up |
-| GLB 大小 | 约 7.4 MiB |
+| GLB 大小 | 约 7.3 MiB |
 | 单档网页 | 约 11 MiB（内嵌 Three.js、GLB、贴图与 UI） |
 | 默认时间 | **当前本地时间**（可用 `?mode=day` / `?mode=night` 固定截图） |
 
@@ -142,10 +142,10 @@
 | [`renders/seven-eleven-viewer.png`](renders/seven-eleven-viewer.png) | 即时页面与 UI 截图 |
 | [`renders/seven-eleven-instore-route.png`](renders/seven-eleven-instore-route.png) | 店内导览、货架标签与服务列（2560 × 1440） |
 | [`renders/seven-eleven-shop.png`](renders/seven-eleven-shop.png) | 购物分类、商品与购物袋（1600 × 1200） |
-| [`renders/seven-eleven-shop-pay.png`](renders/seven-eleven-shop-pay.png) | 购物结账、员工折扣与支付方式（1600 × 1200） |
+| [`renders/seven-eleven-shop-pay.png`](renders/seven-eleven-shop-pay.png) | 购物结账、X 用户折扣与支付方式（1600 × 1200） |
 | [`renders/seven-eleven-shop-receipt-demo.png`](renders/seven-eleven-shop-receipt-demo.png) | 电子购物明细范例（720 px 宽） |
 | [`renders/seven-eleven-coffee-order.png`](renders/seven-eleven-coffee-order.png) | 深夜咖啡点单面板（1600 × 1200） |
-| [`renders/seven-eleven-coffee-pay.png`](renders/seven-eleven-coffee-pay.png) | 咖啡结账与「开亚员工 8.8 折」选项（1600 × 1200） |
+| [`renders/seven-eleven-coffee-pay.png`](renders/seven-eleven-coffee-pay.png) | 咖啡结账与「X用户 8.8 折」选项（1600 × 1200） |
 | [`renders/seven-eleven-coffee-receipt-demo.png`](renders/seven-eleven-coffee-receipt-demo.png) | 电子消费明细范例（720 × 1190） |
 | [`renders/seven-eleven-coffee-card-demo.png`](renders/seven-eleven-coffee-card-demo.png) | 深夜咖啡卡范例（1080 × 1350） |
 | [`renders/seven-eleven-interior.png`](renders/seven-eleven-interior.png) | 走进店内后的货架、冷柜与柜台视角（2560 × 1440） |
@@ -191,6 +191,7 @@ seven_eleven_store/
 - **Three.js r180**：GLTFLoader、OrbitControls、EffectComposer、UnrealBloomPass、SMAAPass、OutputPass；自写天空着色器、星空、玻璃反光、地面光池与环境 map；加入连续日光／黄昏／夜晚参数插值、可动玻璃门与固定路径入店视角。
 - **互动层**：pointer raycast 点门入店、店内拖动环顾、拍照模式与 canvas PNG 下载；深夜咖啡以本地状态机完成选品、三种支付方式、模拟扫码与 HTML Canvas 明细／咖啡卡生成。店内导轨走动以屏幕投影的货架标签与相机 tween 实现，购物袋、三种支付与购物明细同样在本地完成；所有状态仍离线运作。
 - **esbuild**：把 Three.js、GLB（data URL）与贴图打包成单一 HTML。
+- **Lucide**：界面图标采用 Lucide Static v1.70.0（ISC），在页面内以 inline SVG 呈现，不依赖外部 CDN。
 - **Puppeteer + headless Chrome（ANGLE/Metal）**：输出日间与夜晚截图。
 
 ### 重新建置
