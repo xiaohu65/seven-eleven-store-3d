@@ -151,7 +151,7 @@ def make_fascia():
     d.line([(2204, 62), (2204, 197)], fill=(219, 220, 213), width=2)
     text(d, (2258, 80), "24", font(F_DIN, 116), ORANGE, anchor="lt")
     text(d, (2362, 92), "HOURS", font(F_DIN_ALT, 57), GREEN)
-    text(d, (2258, 154), "全年无休 · 天天为你", f_hei(31), (80, 87, 81))
+    text(d, (2258, 178), "全年无休 · 天天为你", f_hei(31), (80, 87, 81))
     # Right-hand support copy, centred as one block.
     text(d, (3600, 102), "OPEN ALWAYS", font(F_DIN_ALT, 31), GREEN, anchor="ma")
     text(d, (3600, 151), "24 / 7", font(F_DIN, 42), (79, 86, 80), anchor="ma")
@@ -176,7 +176,7 @@ def make_pylon():
     # Lower green lightbox.
     d.rectangle([0, 1280, W, H], fill=GREEN)
     text(d, (512, 1328), "24", font(F_DIN, 390), (248, 248, 238), anchor="ma")
-    text(d, (512, 1728), "HOURS", font(F_DIN_ALT, 108), (255, 255, 255), anchor="ma", spacing=16)
+    text(d, (512, 1728), "HOURS", font(F_DIN_ALT, 108), (255, 255, 255), anchor="ma")
     d.line([(150, 1872), (874, 1872)], fill=(255, 255, 255), width=3)
     text(d, (512, 1902), "便利商店  ·  CONVENIENCE", f_hei(47), (246, 248, 239), anchor="ma")
     text(d, (512, 1972), "OPEN EVERY DAY", font(F_DIN_ALT, 33), (197, 226, 214), anchor="ma", spacing=6)
